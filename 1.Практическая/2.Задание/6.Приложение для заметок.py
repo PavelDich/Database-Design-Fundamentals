@@ -17,10 +17,8 @@ def insert_text():
 def extract_text():
     try:
         file_name = fd.asksaveasfilename(
-            filetypes=(("TXT files", "*.txt"),
-                       ("HTML files", "*.html;*.htm"),
-                       ("All files", "*.*")))
-        f = open(file_name, 'w')
+            filetypes=(("TXT files", "*.txt"),))
+        f = open(file_name+".txt", 'w')
         s = text.get(1.0, END)
         f.write(s)
         f.close()
@@ -34,13 +32,13 @@ def clear_text():
 
 
 root = Tk()
-text = Text(width=50, height=25)
-text.grid(columnspan=2)
-b1 = Button(text="Открыть", command=insert_text)
-b1.grid(row=1, sticky=EW)
-b2 = Button(text="Сохранить", command=extract_text)
-b2.grid(row=1, column=1, sticky=EW)
-b3 = Button(text="Очистить", command=clear_text)
-b3.grid(row=2, column=0, columnspan=2, sticky="we")
+text = Text(root, width=50, height=25, wrap="none")
+text.grid(row=0, column=0, columnspan=2, pady=5)
+ButOpen = Button(text="Открыть", command=insert_text)
+ButOpen.grid(row=3, column=0, sticky=EW)
+ButSave = Button(text="Сохранить", command=extract_text)
+ButSave.grid(row=3, column=1, sticky=EW)
+ButClear = Button(text="Очистить", command=clear_text)
+ButClear.grid(row=4, column=0, columnspan=2, sticky=EW)
 
 root.mainloop()
