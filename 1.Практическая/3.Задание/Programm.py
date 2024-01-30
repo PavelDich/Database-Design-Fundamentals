@@ -1,48 +1,67 @@
 import tkinter
 from tkinter import *
-from tkinter import ttk
+import customtkinter
+from customtkinter import *
+
+global UserName
 
 
 def open_programm():
-    def close_programm():
-        root.destroy()
+    def Plus():
+        try:
+            s = str(float(num1.get()) + float(num2.get()))
+        except:
+            s = 'Value error'
+        tex.configure(text=' '.join(str(s)))
 
-    def move_to_shopping_list():
-        selected = goods_listbox.curselection()
-        for index in selected[::-1]:
-            shopping_listbox.insert(END, goods_listbox.get(index))
-            goods_listbox.delete(index)
+    def Minus():
+        try:
+            s = str(float(num1.get()) - float(num2.get()))
+        except:
+            s = 'Value error'
+        tex.configure(text=' '.join(str(s)))
 
-    def move_to_goods_list():
-        selected = shopping_listbox.curselection()
-        for index in selected[::-1]:
-            goods_listbox.insert(END, shopping_listbox.get(index))
-            shopping_listbox.delete(index)
+    def Multiply():
+        try:
+            s = str(float(num1.get()) * float(num2.get()))
+        except:
+            s = 'Value error'
+        tex.configure(text=' '.join(str(s)))
+
+    def Devide():
+        try:
+            s = str(float(num1.get()) / float(num2.get()))
+        except:
+            s = 'Value error'
+        tex.configure(text=' '.join(str(s)))
 
     tkLogin.destroy()
-    root = Tk()
+    root = CTk()
     root.title("Смена цвета")
     root.geometry("300x250")
 
-    goods_listbox = Listbox(root, selectmode=MULTIPLE)
-    goods_listbox.pack(side=LEFT)
-    goods = ['apple', 'bananas', 'carrot', 'bread', 'butter', 'meat', 'potato', 'pineaplle', 'tomato', 'milk']
-    for item in goods:
-        goods_listbox.insert(END, item)
+    LabelUserName = CTkLabel(root, text=str(UserName), width=20, fg_color="transparent")
+    LabelUserName.pack(side=TOP, padx=10, pady=10)
+    frameCulculater = CTkFrame(root)
+    frameCulculater.pack(side=TOP)
 
-    shopping_listbox = Listbox(root, selectmode=MULTIPLE)
-    shopping_listbox.pack(side=RIGHT)
+    num1 = CTkEntry(frameCulculater, width=100)
+    num2 = CTkEntry(frameCulculater, width=100)
+    tex = CTkLabel(frameCulculater, text=' ', width=20, fg_color="transparent")
+    butPlus = CTkButton(frameCulculater, text="+", width=20, command=Plus)
+    butMinus = CTkButton(frameCulculater, text="-", width=20, command=Minus)
+    butMultiply = CTkButton(frameCulculater, text="*", width=20, command=Multiply)
+    butDevide = CTkButton(frameCulculater, text="/", width=20, command=Devide)
 
-    boot = Frame(root)
+    num1.grid(row=0, column=0, columnspan=1, pady=5, sticky=EW)
+    num2.grid(row=0, column=1, columnspan=1, pady=5, sticky=EW)
+    tex.grid(row=1, column=0, columnspan=2, pady=5, sticky=EW)
+    butPlus.grid(row=2, column=0, columnspan=1, pady=5, sticky=EW)
+    butMinus.grid(row=2, column=1, columnspan=1, pady=5, sticky=EW)
+    butMultiply.grid(row=3, column=0, columnspan=1, pady=5, sticky=EW)
+    butDevide.grid(row=3, column=1, columnspan=1, pady=5, sticky=EW)
 
-    boot.pack(side=RIGHT)
-
-    to_shopping_button = Button(boot, text='>>', command=move_to_shopping_list)
-    to_shopping_button.pack()
-
-    to_goods_button = Button(boot, text='<<', command=move_to_goods_list)
-    to_goods_button.pack()
-
+    root.mainloop()
 
 
 def ChekUser():
@@ -56,7 +75,9 @@ def ChekUser():
             continue
         if login.lower().strip() == lines[i].lower().strip():
             if password.lower().strip() == lines[i + 1].lower().strip():
-                print("entered")
+                global UserName
+                UserName = lines[i]
+                print("entered", UserName)
                 open_programm()
 
 
